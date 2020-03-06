@@ -1,0 +1,79 @@
+:root {
+  --button-default-shift: 45px;
+  --item-size: 40px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+	font-size: 100%;
+	font-weight: normal;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+.container {
+  margin: var(--item-size);
+  padding: calc(var(--item-size) + 3px);
+  position: absolute;
+}
+
+table {
+  border: 1px solid rgb(98, 168, 227);
+}
+
+td, .button {
+  width: var(--item-size);
+  height: var(--item-size);
+}
+
+.button {
+  border: 1px solid white;
+  display: table;
+  text-align: center;
+  color: white;
+}
+
+.button>span {
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 14pt;
+  font-weight: bolder;
+}
+
+td {
+  background-color: rgb(98, 168, 227);
+}
+
+.add-button {
+  background-color: rgb(226, 170, 72);
+}
+
+.remove-button {
+  background-color: rgb(163, 33, 20);
+}
+
+#remove-column-button {
+  position: inherit;
+  left: var(--button-default-shift);
+  top: 0;
+}
+
+#remove-row-button {
+  position: inherit;
+  left: 0;
+  top: var(--button-default-shift);
+}
+
+#add-column-button {
+  position: inherit;
+  right: 0;
+  top: var(--button-default-shift);
+}
+
+#add-row-button {
+  position: inherit;
+  left: var(--button-default-shift);
+  bottom: 0;
+}
