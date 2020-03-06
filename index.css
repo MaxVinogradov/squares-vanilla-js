@@ -1,6 +1,6 @@
 :root {
-  --button-default-shift: 45px;
   --item-size: 40px;
+  --button-default-shift: calc(var(--item-size) + 5px);
 }
 
 * {
