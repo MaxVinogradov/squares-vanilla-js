@@ -56,7 +56,7 @@ td {
 
 .remove-button {
   background-color: rgb(163, 33, 20);
-  /* visibility: hidden; */
+  visibility: hidden;
 }
 
 #remove-column-button {
