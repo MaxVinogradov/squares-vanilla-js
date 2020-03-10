@@ -32,6 +32,7 @@ td, .button {
   display: table;
   text-align: center;
   color: white;
+  transition: background-color 1s;
 }
 
 .button>span {
@@ -39,6 +40,14 @@ td, .button {
   vertical-align: middle;
   font-size: 14pt;
   font-weight: bolder;
+}
+
+.button:hover {
+  transition: background-color 1s;
+}
+
+.button:focus {
+  border: 5px solid rgb(98, 168, 227);
 }
 
 td {
@@ -65,11 +74,13 @@ td {
 #remove-column-button {
   left: var(--button-default-shift);
   top: 0;
+  transition: left 0.5s;
 }
 
 #remove-row-button {
   left: 0;
   top: var(--button-default-shift);
+  transition: top 0.5s;
 }
 
 #add-column-button {
