@@ -31,14 +31,14 @@ class TableProcessor {
       .getPropertyValue('--item-size');
     this.#itemSize = parseInt(this.#itemSize);
     this.generateDefaultTable();
-    this.#addRowButton.addEventListener('click', this.addRow.bind(this));
-    this.#addColumnButton.addEventListener('click', this.addColumn.bind(this));
-    this.#removeRowButton.addEventListener('click', this.removeRow.bind(this));
-    this.#removeColumnButton.addEventListener('click', this.removeColumn.bind(this));
-    this.#table.addEventListener('mouseover', this.showButtonOnMouseOverTable.bind(this));
-    this.#table.addEventListener('mouseleave', this.hideButtonOnMouseLeaveTableOrButton.bind(this));
-    this.#removeRowButton.addEventListener('mouseleave', this.hideButtonOnMouseLeaveTableOrButton.bind(this));
-    this.#removeColumnButton.addEventListener('mouseleave', this.hideButtonOnMouseLeaveTableOrButton.bind(this));
+    this.#addRowButton.addEventListener('click', this.addRow);
+    this.#addColumnButton.addEventListener('click', this.addColumn);
+    this.#removeRowButton.addEventListener('click', this.removeRow);
+    this.#removeColumnButton.addEventListener('click', this.removeColumn);
+    this.#table.addEventListener('mouseover', this.showButtonOnMouseOverTable);
+    this.#table.addEventListener('mouseleave', this.hideButtonOnMouseLeaveTableOrButton);
+    this.#removeRowButton.addEventListener('mouseleave', this.hideButtonOnMouseLeaveTableOrButton);
+    this.#removeColumnButton.addEventListener('mouseleave', this.hideButtonOnMouseLeaveTableOrButton);
   }
 
   generateDefaultTable() {
@@ -47,7 +47,7 @@ class TableProcessor {
     }
   }
 
-  showButtonOnMouseOverTable(event) {
+  showButtonOnMouseOverTable = (event) => {
     if (!(event.target instanceof HTMLTableCellElement)) return;
     const { target: { cellIndex: columnIndex, parentNode: { rowIndex }  } } = event;
     this.#columnIndex = columnIndex;
@@ -62,7 +62,7 @@ class TableProcessor {
     };
   }
 
-  hideButtonOnMouseLeaveTableOrButton(event) {
+  hideButtonOnMouseLeaveTableOrButton = (event) => {
     const isMouseMovedOnButton = event.relatedTarget.classList.contains('remove-button') ||
       (event.relatedTarget.parentElement && event.relatedTarget.parentElement.classList.contains('remove-button'));
     const isMouseMovedFromTable = event.target.id === 'main-table';
@@ -79,14 +79,14 @@ class TableProcessor {
     this.#removeColumnButton.style.visibility = 'hidden';
   }
 
-  removeRow() {
+  removeRow = () => {
     if (this.rowsNumber > 1) {
       this.#table.deleteRow(this.#rowIndex)	
     }
     this.hideRemoveButtons();
   }
 
-  removeColumn() {
+  removeColumn = () => {
     if (this.cellsNumber > 1) {
       for (let row of this.#table.rows) {
         row.deleteCell(this.#columnIndex);
@@ -95,7 +95,7 @@ class TableProcessor {
     this.hideRemoveButtons();
   }
 
-  addRow() {
+  addRow = () => {
     const createdRow = this.#table.insertRow();
     const n = this.cellsNumber || this.DEFAULT_COL_NUMBER;
     for (let i = 0; i < n; i++) {
@@ -103,7 +103,7 @@ class TableProcessor {
     }
   }
 
-  addColumn() {
+  addColumn = () => {
     const newCellIndex = this.cellsNumber;
     for (let row of this.#table.rows) {
       row.insertCell(newCellIndex);
