@@ -85,21 +85,41 @@ class TableProcessor {
   }
 
   hideRemoveButtons() {
-    this.#timer = setTimeout(this.hideRemoveButtonsProcessor, 1000);
+    this.#timer = setTimeout(this.hideRemoveButtonsProcessor, 3000);
   }
 
   removeRow = () => {
+    clearTimeout(this.#timer);
     if (this.rowsNumber > 1) {
       this.#table.deleteRow(this.#rowIndex)	
+    }
+    if (this.#table.rows.length === 1) {
+      this.#removeRowButton.style.visibility = 'hidden';
+    }
+    if (this.#table.rows.length === this.#rowIndex) {
+      this.#removeRowButton.style.top = `${
+        parseFloat(this.#removeRowButton.style.top) - this.#itemSize - 2
+      }px`;    
+      this.#rowIndex--;
     }
     this.hideRemoveButtons();
   }
 
   removeColumn = () => {
+    clearTimeout(this.#timer);
     if (this.cellsNumber > 1) {
       for (let row of this.#table.rows) {
         row.deleteCell(this.#columnIndex);
       }
+    }
+    if (this.#table.rows[0].cells.length === 1) {
+      this.#removeColumnButton.style.visibility = 'hidden';
+    }
+    if (this.#columnIndex === this.#table.rows[0].cells.length) {
+      this.#removeColumnButton.style.left = `${
+        parseFloat(this.#removeColumnButton.style.left) - this.#itemSize - 2
+      }px`;
+      this.#columnIndex--;
     }
     this.hideRemoveButtons();
   }
