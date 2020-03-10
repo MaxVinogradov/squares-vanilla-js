@@ -68,7 +68,8 @@ class TableProcessor {
   }
 
   hideButtonOnMouseLeaveTableOrButton(event) {
-    const isMouseMovedOnButton = event.relatedTarget.classList.contains('remove-button') ||event.relatedTarget.parentElement.classList.contains('remove-button');
+    const isMouseMovedOnButton = event.relatedTarget.classList.contains('remove-button') ||
+      (event.relatedTarget.parentElement && event.relatedTarget.parentElement.classList.contains('remove-button'));
     const isMouseMovedFromTable = event.target.id === 'main-table';
     if (isMouseMovedFromTable && isMouseMovedOnButton) return;
     this.hideRemoveButtons();
