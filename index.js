@@ -3,6 +3,7 @@ class TableProcessor {
   static #instance;
 
   #table;
+  #timer;
   #removeColumnButton;
   #removeRowButton;
   #addRowButton;
@@ -48,7 +49,7 @@ class TableProcessor {
   }
 
   showButtonOnMouseOverTable = (event) => {
-    console.log(event)
+    clearTimeout(this.#timer);
     if (!(event.target instanceof HTMLTableCellElement)) return;
     const { 
       target: { 
@@ -78,9 +79,13 @@ class TableProcessor {
     this.hideRemoveButtons();
   }
 
-  hideRemoveButtons() {
+  hideRemoveButtonsProcessor = () => {
     this.#removeRowButton.style.visibility = 'hidden';
-    this.#removeColumnButton.style.visibility = 'hidden';
+    this.#removeColumnButton.style.visibility = 'hidden';  
+  }
+
+  hideRemoveButtons() {
+    this.#timer = setTimeout(this.hideRemoveButtonsProcessor, 1000);
   }
 
   removeRow = () => {

@@ -9,6 +9,11 @@
 	font-size: 100%;
 }
 
+body {
+  min-width: max-content;
+  overflow: auto;
+}
+
 #container {
   display: inline-block;
   position: relative;
