@@ -49,8 +49,17 @@ td {
   background-color: rgb(226, 170, 72);
 }
 
+.add-button:hover {
+  background-color: rgb(237, 181, 83);
+}
+
 .remove-button {
   background-color: rgb(163, 33, 20);
+  visibility: hidden;
+}
+
+.remove-button:hover {
+  background-color: rgb(204, 45, 31);
 }
 
 #remove-column-button {

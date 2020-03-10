@@ -7,6 +7,13 @@ class TableProcessor {
   #removeRowButton;
   #addRowButton;
   #addColumnButton;
+  #itemSize;
+  #state = { 
+    targetCell: {
+      columnIndex: 0,
+      rowIndex: 0,
+    }
+  }
 
   static getInstance() {
     if (!TableProcessor.instance)
@@ -23,32 +30,73 @@ class TableProcessor {
     this.#removeRowButton = document.querySelector('#remove-row-button');
     this.#addRowButton = document.querySelector('#add-row-button');
     this.#addColumnButton = document.querySelector('#add-column-button');
+    this.#itemSize = getComputedStyle(document.body)
+      .getPropertyValue('--item-size');
+    this.#itemSize = parseInt(this.#itemSize);
     this.generateDefaultTable();
-    this.#addRowButton.addEventListener('click', this.addRow.bind(this))
-    this.#addColumnButton.addEventListener('click', this.addColumn.bind(this))
-    this.#removeRowButton.addEventListener('click', this.removeRow.bind(this))
-    this.#removeColumnButton.addEventListener('click', this.removeColumn.bind(this))
-  } 
+    this.#addRowButton.addEventListener('click', this.addRow.bind(this));
+    this.#addColumnButton.addEventListener('click', this.addColumn.bind(this));
+    this.#removeRowButton.addEventListener('click', this.removeRow.bind(this));
+    this.#removeColumnButton.addEventListener('click', this.removeColumn.bind(this));
+    this.#table.addEventListener('mouseover', this.showButtonOnMouseOverTable.bind(this));
+    this.#table.addEventListener('mouseleave', this.hideButtonOnMouseLeaveTableOrButton.bind(this));
+    this.#removeRowButton.addEventListener('mouseleave', this.hideButtonOnMouseLeaveTableOrButton.bind(this));
+    this.#removeColumnButton.addEventListener('mouseleave', this.hideButtonOnMouseLeaveTableOrButton.bind(this));
+  }
 
   generateDefaultTable() {
-    console.log('this.DEFAULT_ROW_NUMBER', this.DEFAULT_ROW_NUMBER)
     for (let i = 0; i < this.DEFAULT_ROW_NUMBER; i++) {
       this.addRow();
     }
   }
 
-  removeRow(index) {
+  showButtonOnMouseOverTable(event) {
+    if (!(event.target instanceof HTMLTableCellElement)) return;
+    const columnIndex = event.target.cellIndex;
+    const rowIndex = event.target.parentNode.rowIndex;
+    this.#state = {  
+      targetCell: {
+        columnIndex, 
+        rowIndex,
+      }
+    };
+    if (this.#table.rows.length === 1 && this.#table.rows[0].cells.length === 1) return;
+    this.#removeRowButton.style.visibility = 'visible';
+    this.#removeColumnButton.style.visibility = 'visible';
+    this.#removeRowButton.style.top = this.calcRemoveButtonOffset(rowIndex);
+    this.#removeColumnButton.style.left = this.calcRemoveButtonOffset(columnIndex);
+  }
+
+  hideButtonOnMouseLeaveTableOrButton(event) {
+    const isMouseMovedOnButton = event.relatedTarget.classList.contains('remove-button') ||event.relatedTarget.parentElement.classList.contains('remove-button');
+    const isMouseMovedFromTable = event.target.id === 'main-table';
+    if (isMouseMovedFromTable && isMouseMovedOnButton) return;
+    this.hideRemoveButtons();
+  }
+
+  calcRemoveButtonOffset(index) {
+    return `${parseFloat(this.#itemSize + 5 + (this.#itemSize + 2) * index)}px`;
+  } 
+
+  hideRemoveButtons() {
+    this.#removeRowButton.style.visibility = 'hidden';
+    this.#removeColumnButton.style.visibility = 'hidden';
+  }
+
+  removeRow() {
     if (this.rowsNumber > 1) {
-      this.#table.deleteRow(0)	
+      this.#table.deleteRow(this.#state.targetCell.rowIndex)	
     }
+    this.hideRemoveButtons();
   }
 
   removeColumn() {
     if (this.cellsNumber > 1) {
       for (let row of this.#table.rows) {
-        row.deleteCell(0);
+        row.deleteCell(this.#state.targetCell.columnIndex);
       }
     }
+    this.hideRemoveButtons();
   }
 
   addRow() {
