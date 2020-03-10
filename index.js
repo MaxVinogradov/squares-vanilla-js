@@ -48,17 +48,25 @@ class TableProcessor {
   }
 
   showButtonOnMouseOverTable = (event) => {
+    console.log(event)
     if (!(event.target instanceof HTMLTableCellElement)) return;
-    const { target: { cellIndex: columnIndex, parentNode: { rowIndex }  } } = event;
+    const { 
+      target: { 
+        cellIndex: columnIndex,
+        parentNode: { rowIndex },
+        offsetTop,
+        offsetLeft,
+      },
+    } = event;
     this.#columnIndex = columnIndex;
     this.#rowIndex = rowIndex;
     if (this.#table.rows.length !== 1) {
       this.#removeRowButton.style.visibility = 'visible';
-      this.#removeRowButton.style.top = this.calcRemoveButtonOffset(rowIndex);
+      this.#removeRowButton.style.top = `${offsetTop}px`;
     };
     if (this.#table.rows[0].cells.length !== 1) {
       this.#removeColumnButton.style.visibility = 'visible';
-      this.#removeColumnButton.style.left = this.calcRemoveButtonOffset(columnIndex);
+      this.#removeColumnButton.style.left =  `${offsetLeft}px`;
     };
   }
 
@@ -69,10 +77,6 @@ class TableProcessor {
     if (isMouseMovedFromTable && isMouseMovedOnButton) return;
     this.hideRemoveButtons();
   }
-
-  calcRemoveButtonOffset(index) {
-    return `${parseFloat(this.#itemSize + 5 + (this.#itemSize + 2) * index)}px`;
-  } 
 
   hideRemoveButtons() {
     this.#removeRowButton.style.visibility = 'hidden';

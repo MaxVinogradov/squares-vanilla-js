@@ -60,13 +60,13 @@ td {
 }
 
 #remove-column-button {
-  left: calc(-1 * var(--item-size) - 3px);
-  top: 2px;
+  top: calc(-1 * var(--item-size) - 3px);
+  left: 3px;
 }
 
 #remove-row-button {
-  top: calc(-1 * var(--item-size) - 3px);
-  left: 3px;
+  left: calc(-1 * var(--item-size) - 3px);
+  top: 2px;
 }
 
 #add-column-button {
