@@ -60,11 +60,14 @@ class TableProcessor {
         rowIndex,
       }
     };
-    if (this.#table.rows.length === 1 && this.#table.rows[0].cells.length === 1) return;
-    this.#removeRowButton.style.visibility = 'visible';
-    this.#removeColumnButton.style.visibility = 'visible';
-    this.#removeRowButton.style.top = this.calcRemoveButtonOffset(rowIndex);
-    this.#removeColumnButton.style.left = this.calcRemoveButtonOffset(columnIndex);
+    if (this.#table.rows.length !== 1) {
+      this.#removeRowButton.style.visibility = 'visible';
+      this.#removeRowButton.style.top = this.calcRemoveButtonOffset(rowIndex);
+    };
+    if (this.#table.rows[0].cells.length !== 1) {
+      this.#removeColumnButton.style.visibility = 'visible';
+      this.#removeColumnButton.style.left = this.calcRemoveButtonOffset(columnIndex);
+    };
   }
 
   hideButtonOnMouseLeaveTableOrButton(event) {
