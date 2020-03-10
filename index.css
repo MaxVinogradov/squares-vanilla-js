@@ -32,7 +32,7 @@ td, .button {
   display: table;
   text-align: center;
   color: white;
-  transition: background-color 1s;
+  transition: all 0.5s ease-in-out;
 }
 
 .button>span {
@@ -43,11 +43,8 @@ td, .button {
 }
 
 .button:hover {
-  transition: background-color 1s;
-}
-
-.button:focus {
-  border: 5px solid rgb(98, 168, 227);
+  opacity: 0.7;
+  transition: all 0.5s ease-in-out;
 }
 
 td {
@@ -55,11 +52,7 @@ td {
 }
 
 .add-button {
-  background-color: rgb(226, 170, 72);
-}
-
-.add-button:hover {
-  background-color: rgb(237, 181, 83);
+  background-color: rgb(227, 178, 79);
 }
 
 .remove-button {
@@ -67,20 +60,14 @@ td {
   visibility: hidden;
 }
 
-.remove-button:hover {
-  background-color: rgb(204, 45, 31);
-}
-
 #remove-column-button {
   left: var(--button-default-shift);
   top: 0;
-  transition: left 0.5s;
 }
 
 #remove-row-button {
   left: 0;
   top: var(--button-default-shift);
-  transition: top 0.5s;
 }
 
 #add-column-button {
