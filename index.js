@@ -8,12 +8,9 @@ class TableProcessor {
   #addRowButton;
   #addColumnButton;
   #itemSize;
-  #state = { 
-    targetCell: {
-      columnIndex: 0,
-      rowIndex: 0,
-    }
-  }
+  #columnIndex = 0;
+  #rowIndex = 0;
+
 
   static getInstance() {
     if (!TableProcessor.instance)
@@ -52,14 +49,9 @@ class TableProcessor {
 
   showButtonOnMouseOverTable(event) {
     if (!(event.target instanceof HTMLTableCellElement)) return;
-    const columnIndex = event.target.cellIndex;
-    const rowIndex = event.target.parentNode.rowIndex;
-    this.#state = {  
-      targetCell: {
-        columnIndex, 
-        rowIndex,
-      }
-    };
+    const { target: { cellIndex: columnIndex, parentNode: { rowIndex }  } } = event;
+    this.#columnIndex = columnIndex;
+    this.#rowIndex = rowIndex;
     if (this.#table.rows.length !== 1) {
       this.#removeRowButton.style.visibility = 'visible';
       this.#removeRowButton.style.top = this.calcRemoveButtonOffset(rowIndex);
@@ -89,7 +81,7 @@ class TableProcessor {
 
   removeRow() {
     if (this.rowsNumber > 1) {
-      this.#table.deleteRow(this.#state.targetCell.rowIndex)	
+      this.#table.deleteRow(this.#rowIndex)	
     }
     this.hideRemoveButtons();
   }
@@ -97,7 +89,7 @@ class TableProcessor {
   removeColumn() {
     if (this.cellsNumber > 1) {
       for (let row of this.#table.rows) {
-        row.deleteCell(this.#state.targetCell.columnIndex);
+        row.deleteCell(this.#columnIndex);
       }
     }
     this.hideRemoveButtons();
